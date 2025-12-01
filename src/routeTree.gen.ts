@@ -13,6 +13,7 @@ import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as ProtectedRouteRouteImport } from './routes/_protected/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as Oauth2RedirectRouteImport } from './routes/oauth2/redirect'
 import { Route as PublicDocsRouteImport } from './routes/_public/docs'
 import { Route as ProtectedDashboardRouteImport } from './routes/_protected/dashboard'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
@@ -38,6 +39,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRouteRoute,
+} as any)
+const Oauth2RedirectRoute = Oauth2RedirectRouteImport.update({
+  id: '/oauth2/redirect',
+  path: '/oauth2/redirect',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PublicDocsRoute = PublicDocsRouteImport.update({
   id: '/docs',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof AuthRegisterRoute
   '/dashboard': typeof ProtectedDashboardRoute
   '/docs': typeof PublicDocsRoute
+  '/oauth2/redirect': typeof Oauth2RedirectRoute
   '/': typeof PublicIndexRoute
   '/organizations/$orgId': typeof ProtectedOrganizationsOrgIdRoute
   '/projects/$projectId': typeof ProtectedProjectsProjectIdRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/register': typeof AuthRegisterRoute
   '/dashboard': typeof ProtectedDashboardRoute
   '/docs': typeof PublicDocsRoute
+  '/oauth2/redirect': typeof Oauth2RedirectRoute
   '/': typeof PublicIndexRoute
   '/organizations/$orgId': typeof ProtectedOrganizationsOrgIdRoute
   '/projects/$projectId': typeof ProtectedProjectsProjectIdRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/_auth/register': typeof AuthRegisterRoute
   '/_protected/dashboard': typeof ProtectedDashboardRoute
   '/_public/docs': typeof PublicDocsRoute
+  '/oauth2/redirect': typeof Oauth2RedirectRoute
   '/_public/': typeof PublicIndexRoute
   '/_protected/organizations/$orgId': typeof ProtectedOrganizationsOrgIdRoute
   '/_protected/projects/$projectId': typeof ProtectedProjectsProjectIdRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/dashboard'
     | '/docs'
+    | '/oauth2/redirect'
     | '/'
     | '/organizations/$orgId'
     | '/projects/$projectId'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/dashboard'
     | '/docs'
+    | '/oauth2/redirect'
     | '/'
     | '/organizations/$orgId'
     | '/projects/$projectId'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/_auth/register'
     | '/_protected/dashboard'
     | '/_public/docs'
+    | '/oauth2/redirect'
     | '/_public/'
     | '/_protected/organizations/$orgId'
     | '/_protected/projects/$projectId'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
+  Oauth2RedirectRoute: typeof Oauth2RedirectRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRouteRoute
+    }
+    '/oauth2/redirect': {
+      id: '/oauth2/redirect'
+      path: '/oauth2/redirect'
+      fullPath: '/oauth2/redirect'
+      preLoaderRoute: typeof Oauth2RedirectRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_public/docs': {
       id: '/_public/docs'
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
   PublicRouteRoute: PublicRouteRouteWithChildren,
+  Oauth2RedirectRoute: Oauth2RedirectRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

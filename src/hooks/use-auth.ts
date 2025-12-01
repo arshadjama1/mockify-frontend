@@ -68,3 +68,11 @@ export function useLogout() {
     },
   });
 }
+
+export function useGoogleLogin() {
+  return {
+    initiateGoogleLogin: () => {
+      window.location.href = authApi.getGoogleAuthUrl();
+    },
+  };
+}
