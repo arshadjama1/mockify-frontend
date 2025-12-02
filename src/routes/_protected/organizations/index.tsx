@@ -54,7 +54,7 @@ export function OrganizationsPage() {
     setIsCreateOpen(false);
   };
 
-  const handleDelete = async (id: number, name: string) => {
+  const handleDelete = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
       await deleteMutation.mutateAsync(id);
     }
@@ -155,7 +155,7 @@ export function OrganizationsPage() {
                 <div className="flex items-start justify-between">
                   <Link
                     to="/organizations/$orgId"
-                    params={{ orgId: org.id.toString() }}
+                    params={{ orgId: org.id }}
                     className="flex-1"
                   >
                     <CardTitle className="hover:text-primary transition-colors">

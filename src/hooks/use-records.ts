@@ -2,7 +2,7 @@ import { recordsApi } from '@/api/records';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-export function useRecords(schemaId: number) {
+export function useRecords(schemaId: string) {
   return useQuery({
     queryKey: ['schemas', schemaId, 'records'],
     queryFn: () => recordsApi.getAll(schemaId),
@@ -10,7 +10,7 @@ export function useRecords(schemaId: number) {
   });
 }
 
-export function useRecord(id: number) {
+export function useRecord(id: string) {
   return useQuery({
     queryKey: ['records', id],
     queryFn: () => recordsApi.getById(id),
@@ -26,7 +26,7 @@ export function useCreateRecord() {
       schemaId,
       data,
     }: {
-      schemaId: number;
+      schemaId: string;
       data: { data: Record<string, any> };
     }) => recordsApi.create(schemaId, data),
     onSuccess: (result) => {
@@ -52,7 +52,7 @@ export function useUpdateRecord() {
       id,
       data,
     }: {
-      id: number;
+      id: string;
       data: { data: Record<string, any> };
     }) => recordsApi.update(id, data),
     onSuccess: (result) => {
@@ -72,7 +72,7 @@ export function useDeleteRecord() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => recordsApi.delete(id),
+    mutationFn: (id: string) => recordsApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['schemas'] });
       queryClient.invalidateQueries({ queryKey: ['records'] });

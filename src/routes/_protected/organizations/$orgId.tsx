@@ -33,7 +33,7 @@ export const Route = createFileRoute('/_protected/organizations/$orgId')({
 
 export function OrganizationDetail() {
   const { orgId } = Route.useParams();
-  const { data: organization, isLoading } = useOrganization(Number(orgId));
+  const { data: organization, isLoading } = useOrganization(orgId);
   const createProjectMutation = useCreateProject();
   const deleteProjectMutation = useDeleteProject();
 
@@ -48,13 +48,13 @@ export function OrganizationDetail() {
 
     await createProjectMutation.mutateAsync({
       name: projectName,
-      organizationId: Number(orgId),
+      organizationId: orgId,
     });
     setProjectName('');
     setIsCreateOpen(false);
   };
 
-  const handleDeleteProject = async (id: number, name: string) => {
+  const handleDeleteProject = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
       await deleteProjectMutation.mutateAsync(id);
     }
@@ -166,7 +166,7 @@ export function OrganizationDetail() {
                   <div className="flex items-start justify-between">
                     <Link
                       to="/projects/$projectId"
-                      params={{ projectId: project.id.toString() }}
+                      params={{ projectId: project.id }}
                       className="flex-1"
                     >
                       <CardTitle className="hover:text-primary transition-colors">

@@ -10,7 +10,7 @@ export function useOrganizations() {
   });
 }
 
-export function useOrganization(id: number) {
+export function useOrganization(id: string) {
   return useQuery({
     queryKey: ['organizations', id],
     queryFn: () => organizationsApi.getById(id),
@@ -39,7 +39,7 @@ export function useUpdateOrganization() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: OrganizationInput }) =>
+    mutationFn: ({ id, data }: { id: string; data: OrganizationInput }) =>
       organizationsApi.update(id, data),
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] });
@@ -58,7 +58,7 @@ export function useDeleteOrganization() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => organizationsApi.delete(id),
+    mutationFn: (id: string) => organizationsApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] });
       toast.success('Organization deleted successfully');

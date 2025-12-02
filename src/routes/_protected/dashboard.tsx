@@ -139,7 +139,7 @@ export function DashboardPage() {
                 <Link
                   key={org.id}
                   to="/organizations/$orgId"
-                  params={{ orgId: org.id.toString() }}
+                  params={{ orgId: org.id }}
                   className="flex items-center justify-between rounded-lg border p-4 hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">

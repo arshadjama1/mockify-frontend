@@ -31,7 +31,7 @@ export const Route = createFileRoute('/_protected/schemas/$schemaId')({
 
 function SchemaDetail() {
   const { schemaId } = Route.useParams();
-  const { data: schema, isLoading } = useSchema(Number(schemaId));
+  const { data: schema, isLoading } = useSchema(schemaId);
   const createRecordMutation = useCreateRecord();
   const deleteRecordMutation = useDeleteRecord();
 
@@ -42,7 +42,7 @@ function SchemaDetail() {
     try {
       const data = JSON.parse(recordData);
       await createRecordMutation.mutateAsync({
-        schemaId: Number(schemaId),
+        schemaId: schemaId,
         data: { data },
       });
       setRecordData('{}');
@@ -52,7 +52,7 @@ function SchemaDetail() {
     }
   };
 
-  const handleDeleteRecord = async (id: number) => {
+  const handleDeleteRecord = async (id: string) => {
     if (confirm('Are you sure you want to delete this record?')) {
       await deleteRecordMutation.mutateAsync(id);
     }
@@ -84,7 +84,7 @@ function SchemaDetail() {
       <div>
         <Link
           to="/projects/$projectId"
-          params={{ projectId: schema.project.id.toString() }}
+          params={{ projectId: schema.project.id }}
         >
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />

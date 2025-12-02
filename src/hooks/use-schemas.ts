@@ -2,7 +2,7 @@ import { schemasApi } from '@/api/schemas';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-export function useSchemas(projectId: number) {
+export function useSchemas(projectId: string) {
   return useQuery({
     queryKey: ['projects', projectId, 'schemas'],
     queryFn: () => schemasApi.getByProject(projectId),
@@ -10,7 +10,7 @@ export function useSchemas(projectId: number) {
   });
 }
 
-export function useSchema(id: number) {
+export function useSchema(id: string) {
   return useQuery({
     queryKey: ['schemas', id],
     queryFn: () => schemasApi.getById(id),
@@ -24,7 +24,7 @@ export function useCreateSchema() {
   return useMutation({
     mutationFn: (data: {
       name: string;
-      projectId: number;
+      projectId: string;
       schemaJson: Record<string, any>;
     }) => schemasApi.create(data),
     onSuccess: (_, variables) => {
@@ -50,7 +50,7 @@ export function useUpdateSchema() {
       id,
       data,
     }: {
-      id: number;
+      id: string;
       data: { name: string; schemaJson: Record<string, any> };
     }) => schemasApi.update(id, data),
     onSuccess: (result) => {
@@ -70,7 +70,7 @@ export function useDeleteSchema() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => schemasApi.delete(id),
+    mutationFn: (id: string) => schemasApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       queryClient.invalidateQueries({ queryKey: ['schemas'] });

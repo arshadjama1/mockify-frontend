@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   created_at: string;
@@ -25,16 +25,16 @@ export interface RegisterRequest {
 }
 
 export interface Organization {
-  id: number;
+  id: string;
   name: string;
-  ownerId: number;
+  ownerId: string;
   ownerName: string;
   createdAt: string;
   projectCount: number;
 }
 
 export interface OrganizationDetail {
-  id: number;
+  id: string;
   name: string;
   owner: User;
   createdAt: string;
@@ -42,16 +42,16 @@ export interface OrganizationDetail {
 }
 
 export interface ProjectSummary {
-  id: number;
+  id: string;
   name: string;
   schemaCount: number;
   createdAt: string;
 }
 
 export interface Project {
-  id: number;
+  id: string;
   name: string;
-  organizationId: number;
+  organizationId: string;
   organizationName: string;
   createdAt: string;
   schemaCount: number;
@@ -59,10 +59,10 @@ export interface Project {
 }
 
 export interface ProjectDetail {
-  id: number;
+  id: string;
   name: string;
   organization: {
-    id: number;
+    id: string;
     name: string;
   };
   createdAt: string;
@@ -78,16 +78,16 @@ export interface ProjectStats {
 }
 
 export interface MockSchemaSummary {
-  id: number;
+  id: string;
   name: string;
   recordCount: number;
   createdAt: string;
 }
 
 export interface MockSchema {
-  id: number;
+  id: string;
   name: string;
-  projectId: number;
+  projectId: string;
   projectName: string;
   schemaJson: Record<string, object>;
   createdAt: string;
@@ -96,10 +96,10 @@ export interface MockSchema {
 }
 
 export interface MockSchemaDetail {
-  id: number;
+  id: string;
   name: string;
   project: {
-    id: number;
+    id: string;
     name: string;
     organizationName: string;
   };
@@ -118,7 +118,7 @@ export interface SchemaStats {
 }
 
 export interface MockRecordSummary {
-  id: number;
+  id: string;
   data: Record<string, any>;
   createdAt: string;
   expiresAt: string;
@@ -126,8 +126,8 @@ export interface MockRecordSummary {
 }
 
 export interface MockRecord {
-  id: number;
-  schemaId: number;
+  id: string;
+  schemaId: string;
   schemaName: string;
   data: Record<string, any>;
   createdAt: string;

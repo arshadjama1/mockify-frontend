@@ -3,7 +3,7 @@ import type { MockRecord } from './types';
 
 export const recordsApi = {
   create: async (
-    schemaId: number,
+    schemaId: string,
     body: { data: Record<string, any> },
   ): Promise<MockRecord> => {
     const response = await apiClient.post<MockRecord>(
@@ -15,27 +15,27 @@ export const recordsApi = {
     return response.data;
   },
 
-  getAll: async (schemaId: number): Promise<MockRecord[]> => {
+  getAll: async (schemaId: string): Promise<MockRecord[]> => {
     const response = await apiClient.get<MockRecord[]>(
       `/schemas/${schemaId}/records`,
     );
     return response.data;
   },
 
-  getById: async (id: number): Promise<MockRecord> => {
+  getById: async (id: string): Promise<MockRecord> => {
     const response = await apiClient.get<MockRecord>(`/records/${id}`);
     return response.data;
   },
 
   update: async (
-    id: number,
+    id: string,
     data: { data: Record<string, any>; ttlMinutes?: number },
   ): Promise<MockRecord> => {
     const response = await apiClient.put<MockRecord>(`/records/${id}`, data);
     return response.data;
   },
 
-  delete: async (id: number): Promise<void> => {
+  delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/records/${id}`);
   },
 };

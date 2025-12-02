@@ -40,7 +40,7 @@ export const Route = createFileRoute('/_protected/projects/$projectId')({
 
 function ProjectDetail() {
   const { projectId } = Route.useParams();
-  const { data: project, isLoading } = useProject(Number(projectId));
+  const { data: project, isLoading } = useProject(projectId);
   const createSchemaMutation = useCreateSchema();
   const deleteSchemaMutation = useDeleteSchema();
 
@@ -51,7 +51,7 @@ function ProjectDetail() {
       {
         id: 'number',
         name: 'string',
-        email: 'email',
+        email: 'string',
       },
       null,
       2,
@@ -68,7 +68,7 @@ function ProjectDetail() {
       const schemaJson = JSON.parse(schemaDefinition);
       await createSchemaMutation.mutateAsync({
         name: schemaName,
-        projectId: Number(projectId),
+        projectId: projectId,
         schemaJson,
       });
       setSchemaName('');
@@ -79,7 +79,7 @@ function ProjectDetail() {
     }
   };
 
-  const handleDeleteSchema = async (id: number, name: string) => {
+  const handleDeleteSchema = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
       await deleteSchemaMutation.mutateAsync(id);
     }
@@ -120,7 +120,7 @@ function ProjectDetail() {
       <div>
         <Link
           to="/organizations/$orgId"
-          params={{ orgId: project.organization.id.toString() }}
+          params={{ orgId: project.organization.id }}
         >
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -257,7 +257,7 @@ function ProjectDetail() {
                   <div className="flex items-start justify-between">
                     <Link
                       to="/schemas/$schemaId"
-                      params={{ schemaId: schema.id.toString() }}
+                      params={{ schemaId: schema.id }}
                       className="flex-1"
                     >
                       <CardTitle className="hover:text-primary transition-colors">

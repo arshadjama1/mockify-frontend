@@ -2,21 +2,21 @@ import { apiClient } from './client';
 import type { MockSchema, MockSchemaDetail } from './types';
 
 export const schemasApi = {
-  getByProject: async (projectId: number): Promise<MockSchema[]> => {
+  getByProject: async (projectId: string): Promise<MockSchema[]> => {
     const response = await apiClient.get<MockSchema[]>(
       `/projects/${projectId}/schemas`,
     );
     return response.data;
   },
 
-  getById: async (id: number): Promise<MockSchemaDetail> => {
+  getById: async (id: string): Promise<MockSchemaDetail> => {
     const response = await apiClient.get<MockSchemaDetail>(`/schemas/${id}`);
     return response.data;
   },
 
   create: async (data: {
     name: string;
-    projectId: number;
+    projectId: string;
     schemaJson: Record<string, object>;
   }): Promise<MockSchema> => {
     const response = await apiClient.post<MockSchema>('/schemas', data);
@@ -24,14 +24,14 @@ export const schemasApi = {
   },
 
   update: async (
-    id: number,
+    id: string,
     data: { name: string; schemaJson: Record<string, object> },
   ): Promise<MockSchema> => {
     const response = await apiClient.put<MockSchema>(`/schemas/${id}`, data);
     return response.data;
   },
 
-  delete: async (id: number): Promise<void> => {
+  delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/schemas/${id}`);
   },
 };

@@ -3,14 +3,14 @@ import type { Project, ProjectDetail } from '@/api/types';
 import type { ProjectInput } from '@/lib/validations';
 
 export const projectsApi = {
-  getAll: async (organizationId: number): Promise<Project[]> => {
+  getAll: async (organizationId: string): Promise<Project[]> => {
     const response = await api.get<Project[]>(
       `/organizations/${organizationId}/projects`,
     );
     return response.data;
   },
 
-  getById: async (id: number): Promise<ProjectDetail> => {
+  getById: async (id: string): Promise<ProjectDetail> => {
     const response = await api.get<ProjectDetail>(`/projects/${id}`);
     return response.data;
   },
@@ -21,14 +21,14 @@ export const projectsApi = {
   },
 
   update: async (
-    id: number,
+    id: string,
     data: Omit<ProjectInput, 'organizationId'>,
   ): Promise<Project> => {
     const response = await api.put<Project>(`/projects/${id}`, data);
     return response.data;
   },
 
-  delete: async (id: number): Promise<void> => {
+  delete: async (id: string): Promise<void> => {
     await api.delete(`/projects/${id}`);
   },
 };

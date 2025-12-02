@@ -8,7 +8,7 @@ export const organizationsApi = {
     return response.data;
   },
 
-  getById: async (id: number): Promise<OrganizationDetail> => {
+  getById: async (id: string): Promise<OrganizationDetail> => {
     const response = await api.get<OrganizationDetail>(`/organizations/${id}`);
     return response.data;
   },
@@ -19,14 +19,14 @@ export const organizationsApi = {
   },
 
   update: async (
-    id: number,
+    id: string,
     data: OrganizationInput,
   ): Promise<Organization> => {
     const response = await api.put<Organization>(`/organizations/${id}`, data);
     return response.data;
   },
 
-  delete: async (id: number): Promise<void> => {
+  delete: async (id: string): Promise<void> => {
     await api.delete(`/organizations/${id}`);
   },
 };

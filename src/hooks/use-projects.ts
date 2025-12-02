@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { projectsApi } from '@/api/projects';
 import type { ProjectInput } from '@/lib/validations';
 
-export function useProjects(organizationId: number) {
+export function useProjects(organizationId: string) {
   return useQuery({
     queryKey: ['projects', organizationId],
     queryFn: () => projectsApi.getAll(organizationId),
@@ -11,7 +11,7 @@ export function useProjects(organizationId: number) {
   });
 }
 
-export function useProject(id: number) {
+export function useProject(id: string) {
   return useQuery({
     queryKey: ['projects', id],
     queryFn: () => projectsApi.getById(id),
@@ -48,7 +48,7 @@ export function useUpdateProject() {
       id,
       data,
     }: {
-      id: number;
+      id: string;
       data: Omit<ProjectInput, 'organizationId'>;
     }) => projectsApi.update(id, data),
     onSuccess: (_, { id }) => {
@@ -67,7 +67,7 @@ export function useDeleteProject() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => projectsApi.delete(id),
+    mutationFn: (id: string) => projectsApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       queryClient.invalidateQueries({ queryKey: ['organizations'] });
